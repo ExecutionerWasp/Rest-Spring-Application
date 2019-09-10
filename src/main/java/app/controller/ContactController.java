@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/contacts")
+@RequestMapping("/contact")
 public class ContactController {
 
     private final ContactRepos contactRepos;
@@ -21,13 +21,13 @@ public class ContactController {
         this.contactRepos = contactRepos;
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public Contact findById(@PathVariable Integer id){
         System.out.println(contactRepos.findById(id).get());
         return contactRepos.findById(id).get();
     }
 
-    @GetMapping
+    @GetMapping("/list")
     public List<Contact> findAll(){
         return contactRepos.findAll();
     }
