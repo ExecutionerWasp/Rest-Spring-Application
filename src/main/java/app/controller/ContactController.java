@@ -1,34 +1,42 @@
 package app.controller;
 
 import app.domain.Contact;
-import app.repos.ContactRepos;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import app.service.ContactService;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.*;
 
+@Log4j2
 @RestController
 @RequestMapping("/contact")
 public class ContactController {
 
-    private final ContactRepos contactRepos;
+    private final ContactService contactService;
 
-    @Autowired
-    public ContactController(ContactRepos contactRepos) {
-        this.contactRepos = contactRepos;
+    public ContactController(ContactService contactService) {
+        this.contactService = contactService;
     }
 
-    @GetMapping("/{id}")
-    public Contact findById(@PathVariable Integer id){
-        System.out.println(contactRepos.findById(id).get());
-        return contactRepos.findById(id).get();
+
+    @GetMapping
+    public List<Contact> findBy(
+            @RequestParam(name = "id", defaultValue = "-1") Integer id,
+            @RequestParam(name = "name", defaultValue = "null") String name){
+        log.info("REQUEST SUCCESSFUL");
+        log.info("ID : " + id + "NAME : " + name);
+        if (id!=-1){
+            return Collections.singletonList(contactService.findById(id));
+        }
+
+        if (Objects.nonNull(name)){
+            return contactService.findAllByName(name);
+        }
+        return Collections.EMPTY_LIST;
     }
 
     @GetMapping("/list")
     public List<Contact> findAll(){
-        return contactRepos.findAll();
+        return contactService.findAll();
     }
 }
