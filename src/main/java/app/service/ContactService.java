@@ -12,6 +12,12 @@ public interface ContactService {
 
     void remove(@NonNull Contact contact);
 
+    void removeById(@NonNull Integer id);
+
+    default void removeById(@NonNull String id){
+        this.findById(Integer.valueOf(id));
+    }
+
     List<Contact> findAll();
 
     List<Contact> findAllByName(String name);

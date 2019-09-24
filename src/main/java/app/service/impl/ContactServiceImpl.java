@@ -3,6 +3,7 @@ package app.service.impl;
 import app.domain.Contact;
 import app.repos.ContactRepos;
 import app.service.ContactService;
+import lombok.NonNull;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,6 +25,11 @@ public class ContactServiceImpl implements ContactService {
     @Override
     public void remove(Contact contact) {
         contactRepos.delete(contact);
+    }
+
+    @Override
+    public void removeById(@NonNull Integer id) {
+        contactRepos.deleteById(id);
     }
 
     @Override

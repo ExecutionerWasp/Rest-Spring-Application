@@ -18,25 +18,54 @@ public class ContactController {
         this.contactService = contactService;
     }
 
+    @GetMapping("/{name}")
+    public List<Contact> findByName(@PathVariable(name = "name") String name) {
+        log.info("GET REQUEST 'Find by name' SUCCESSFUL");
+        log.info("NAME: " + name);
+        var contact = contactService.findAllByName(name);
+        return Objects.requireNonNull(contact);
+    }
 
-    @GetMapping
-    public List<Contact> findBy(
-            @RequestParam(name = "id", defaultValue = "-1") Integer id,
-            @RequestParam(name = "name", defaultValue = "null") String name){
-        log.info("REQUEST SUCCESSFUL");
-        log.info("ID : " + id + "NAME : " + name);
-        if (id!=-1){
-            return Collections.singletonList(contactService.findById(id));
-        }
-
-        if (Objects.nonNull(name)){
-            return contactService.findAllByName(name);
-        }
-        return Collections.EMPTY_LIST;
+    @GetMapping("/{id}")
+    public Contact findById(@PathVariable(name = "id") Integer id) {
+        log.info("GET REQUEST 'Find by id' SUCCESSFUL");
+        log.info("ID : " + id);
+        var contact = contactService.findById(id);
+        return Objects.requireNonNull(contact);
     }
 
     @GetMapping("/list")
-    public List<Contact> findAll(){
-        return contactService.findAll();
+    public List<Contact> findAll() {
+        log.info("GET REQUEST 'Find all' SUCCESSFUL");
+        var contacts = contactService.findAll();
+        return Objects.requireNonNull(contacts);
+    }
+
+    @PostMapping("/save")
+    public Contact saveContact(@RequestBody Contact contact) {
+        log.info("POST REQUEST 'Save contact' SUCCESSFUL");
+        Contact local = null;
+        if (Objects.nonNull(contact)) {
+            local = contactService.save(contact);
+        }
+        log.info("CONTACT : " + local);
+        return local;
+    }
+
+    @PutMapping("/{id}")
+    public Contact setContact(@PathVariable(name = "id") Integer id, @RequestBody Contact contact) {
+        log.info("POST REQUEST 'Set contact' SUCCESSFUL");
+        log.info("ID : " + id);
+        log.info("Resetting contact : " + contact);
+        var contactFromDB = contactService.findById(id);
+        contact.setId(contactFromDB.getId());
+        var local = contactService.save(contact);
+        return Objects.requireNonNull(local);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteContact(@PathVariable(name = "id") Integer id) {
+        log.info("POST REQUEST 'Save contact' SUCCESSFUL");
+        contactService.removeById(id);
     }
 }
