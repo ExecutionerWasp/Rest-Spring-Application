@@ -3,6 +3,7 @@ package app.controller;
 import app.domain.Contact;
 import app.service.ContactService;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -53,19 +54,22 @@ public class ContactController {
     }
 
     @PutMapping("/{id}")
-    public Contact setContact(@PathVariable(name = "id") Integer id, @RequestBody Contact contact) {
+    public ResponseEntity<Contact> setContact(@PathVariable(name = "id") Integer id, @RequestBody Contact contact) {
         log.info("POST REQUEST 'Set contact' SUCCESSFUL");
         log.info("ID : " + id);
         log.info("Resetting contact : " + contact);
         var contactFromDB = contactService.findById(id);
         contact.setId(contactFromDB.getId());
         var local = contactService.save(contact);
-        return Objects.requireNonNull(local);
+        return ResponseEntity.ok(local);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteContact(@PathVariable(name = "id") Integer id) {
+    public ResponseEntity<Contact> deleteContact(@PathVariable(name = "id") Integer id) {
         log.info("POST REQUEST 'Save contact' SUCCESSFUL");
-        contactService.removeById(id);
+        var removable = contactService.removeById(id);
+        return ResponseEntity.ok(removable);
     }
+
+
 }

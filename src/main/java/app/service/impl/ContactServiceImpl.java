@@ -1,6 +1,7 @@
 package app.service.impl;
 
 import app.domain.Contact;
+import app.exception.ContactNotFoundException;
 import app.repos.ContactRepos;
 import app.service.ContactService;
 import lombok.NonNull;
@@ -23,13 +24,8 @@ public class ContactServiceImpl implements ContactService {
     }
 
     @Override
-    public void remove(Contact contact) {
-        contactRepos.delete(contact);
-    }
-
-    @Override
-    public void removeById(@NonNull Integer id) {
-        contactRepos.deleteById(id);
+    public Contact removeById(@NonNull Contact contact) {
+        return contactRepos.deleteById(contact).orElseThrow(ContactNotFoundException::new);
     }
 
     @Override
@@ -44,6 +40,6 @@ public class ContactServiceImpl implements ContactService {
 
     @Override
     public Contact findById(Integer id) {
-        return contactRepos.findById(id).get();
+        return contactRepos.findById(id).orElseThrow(ContactNotFoundException::new);
     }
 }

@@ -4,18 +4,21 @@ import app.domain.Contact;
 import lombok.NonNull;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ContactService {
 
     @NonNull
     Contact save(@NonNull Contact contact);
 
-    void remove(@NonNull Contact contact);
+    Contact removeById(@NonNull Contact contact);
 
-    void removeById(@NonNull Integer id);
+    default Contact removeById(@NonNull Integer id){
+        return this.removeById(this.findById(id));
+    }
 
-    default void removeById(@NonNull String id){
-        this.findById(Integer.valueOf(id));
+    default Contact removeById(@NonNull String id){
+        return this.removeById(this.findById(id));
     }
 
     List<Contact> findAll();
