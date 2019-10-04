@@ -30,14 +30,14 @@
             return {
                 title: "CRM",
                 buttons: [
-                    {id: 1, name: "Додати контакт", color: "primary", icon: "person_add"},
+                    {id: 1, name: "Додати контакт", color: "blue-grey", icon: "person_add"},
                     {id: 2, name: "Показати менеджерів", color: "blue-grey", icon: "person_pin"},
-                    {id: 3, name: "Оновити клієнтів", color: "success", icon: "update"},
-                    {id: 4, name: "Оновити лідів", color: "success", icon: "update"},
-                    {id: 5, name: "Отримати дублікати", color: "success", icon: "list_alt"},
-                    {id: 6, name: "Backups", color: "secondary", icon: "backup"},
-                    {id: 7, name: "Невизначені клієнти", color: "secondary", icon: "person"},
-                    {id: 8, name: "Аналітика", color: "error", icon: "timeline"}
+                    {id: 3, name: "Оновити клієнтів", color: "blue-grey", icon: "update"},
+                    {id: 4, name: "Оновити лідів", color: "blue-grey", icon: "update"},
+                    {id: 5, name: "Отримати дублікати", color: "blue-grey", icon: "list_alt"},
+                    {id: 6, name: "Backups", color: "blue-grey", icon: "backup"},
+                    {id: 7, name: "Невизначені клієнти", color: "blue-grey", icon: "person"},
+                    {id: 8, name: "Аналітика", color: "blue-grey", icon: "timeline"}
                 ]
             }
         },
